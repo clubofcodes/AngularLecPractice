@@ -1,0 +1,24 @@
+<!-- <h4 class="text-white m-4">Clicked result tab..!!</h4> -->
+<br>
+<div class="container-fluid mb-3">
+    <div class="row">
+        <div class="col align-content-center">
+            <h4 class="text-center">Full Name: {{student.name}}</h4>
+            <h6 class="card-text text-center mb-4">Enrollment No.: {{student.en_No}}</h6>
+    </div>
+    <br>
+    <div class="row gut">
+        <div *ngFor="let res of results[id].allres; let i=index" class="card text-white shade">
+            <img class="card-img-top img" [src]="url" height="200px" width="200px" />
+            <div class="card-body">
+                <p class="card-text" align="center">
+                    <legend style="margin-top: -15px">{{res.sem}}</legend>
+                </p>
+                <p class="card-text">SGPA: {{res.sgpa}}</p>
+                <p class="card-text">CGPA: {{res.cgpa}}</p>
+                <a class="btn btn-success btn-sm mr-1" style="margin-top: -13px" (click)="show('Coming Soon')">Edit</a>
+                <a class="btn btn-danger btn-sm ml-1" style="margin-top: -13px" onclick="return confirm('Do you want to delete?');">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

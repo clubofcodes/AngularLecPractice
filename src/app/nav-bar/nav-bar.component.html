@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="border-bottom: 1px solid white">
+  <div class="container-fluid justify-content-start">
+    <button class="navbar-toggler" style="margin-right:1rem;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand mt-1 text-white ml-1" href="http://rjworld.dx.am/" target="_blank"><img class="mb-1 mr-1" width="30" src="https://i.ibb.co/1MddPNS/icon.png">18SOEIT11009</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link text-white p-2" placement="bottom" ngbTooltip="Welcome" routerLink="/home" routerLinkActive="active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white p-2" ngbTooltip="Students List" routerLink="/students" routerLinkActive="active">Students</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white p-2" ngbTooltip="Particular student result" routerLink="/results" routerLinkActive="active">Result</a>
+        </li>
+      </ul>
+    </div>
+    <div class="search-container">
+      <!-- other events => keyup, keyup.enter, keyup.space, keydown, blur -->
+      <!-- we can access value using event without hasname/id_var (i.e.: #name) => (keyup.enter)="show($event.target.value)" -->
+      <!-- <input type="search" #keyup (keyup)="show(keyup.value)" aria-label="search" placeholder="Search"> -->
+      <!-- <input type="search" #keydown (keydown)="show(keydown.value)" aria-label="search" placeholder="Search"> -->
+      <input type="search" #keyent (keyup.enter)="show(keyent.value)" aria-label="search" placeholder="Search">
+    </div>
+  </div>
+</nav>

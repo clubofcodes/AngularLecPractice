@@ -1,0 +1,32 @@
+<!-- <h4 class="text-white m-4">Clicked result tab..!!</h4> -->
+<br>
+<div class="container-fluid mb-3">
+    <div class="row">
+        <div class="col-lg-2">
+            <h4 class="text-warning">Results List</h4>
+        </div>
+        <div class="col-lg-2" style="width: 13% !important;">
+          <input type="text" #uname placeholder="Username">
+        </div>
+        <div class="col-lg-8">
+          <a class="btn btn-primary btn-sm" (click)="show(uname.value)">Show</a>
+        </div>
+    </div>
+    <br>
+    <div class="row gut" *ngFor="let resmain of results; let m=index">
+        <div *ngFor="let res of results[m].allres; let i=index" class="card text-white shade">
+            <img class="card-img-top img" [src]="url" height="200px" width="200px" />
+            <div class="card-body">
+                <p class="card-text" align="center">
+                    <legend style="margin-top: -15px">{{res.sem}}-{{i}}</legend>
+                </p>
+                <!-- <p class="card-text">Full Name: {{students[i].name}}</p>
+                <p class="card-text">Enrollment No.: {{students[i].en_No}}</p> -->
+                <p class="card-text">SGPA: {{res.sgpa}}</p>
+                <p class="card-text">CGPA: {{res.cgpa}}</p>
+                <a class="btn btn-success btn-sm mr-1" style="margin-top: -13px" (click)="editshow('Coming Soon')">Edit</a>
+                <a class="btn btn-danger btn-sm ml-1" style="margin-top: -13px" onclick="return confirm('Do you want to delete?');">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<!-- <h4 class="text-white m-4">Clicked students tab..!!</h4> -->
+<br>
+<div class="container-fluid mb-3">
+  <div class="row">
+    <!-- mouseOver/Leave event goes here -->
+    <div class="col align-content-center" (mouseover)="mouseEvent(true)"
+      (mouseleave)="mouseEvent(false)">
+      <h4 *ngIf="!changeText" class="text-warning text-center">Students List</h4>
+      <h4 *ngIf="changeText" class="text-warning text-center">RKU students list</h4>
+    </div>
+  </div>
+  <br>
+  <div class="row gut">
+    <div *ngFor="let student of students; let i=index" [routerLink]="['/student-detail',{id:i}]" class="card text-white shade">
+      <div *ngIf="(i)%2==0; else elseblock">
+        <img class="card-img-top img" [src]="student.img_url" height="200px" width="200px" />
+        <div class="card-body">
+          <p class="card-text">Enrollment No.: {{student.en_No}}</p>
+          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Full Name: {{student.name}}</p>
+          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Email: {{student.email}}</p>
+          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">DOB: {{student.dob}}</p>
+          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Field: {{student.field}}</p>
+          <a class="btn btn-success btn-sm mr-1" [ngStyle]="{'margin-top': '-13px'}" (click)="show('Coming Soon')">Edit</a>
+          <a class="btn btn-danger btn-sm ml-1" [ngStyle]="{'margin-top': '-13px'}" onclick="return confirm('Do you want to delete?');">Delete</a>
+        </div>
+      </div>
+      <ng-template #elseblock>
+      <div [ngStyle]="{'background-color':'maroon', 'border-radius':'15px', 'font-family' : 'Jokerman'}">
+        <img class="card-img-top img" [src]="student.img_url" height="200px" width="200px" />
+        <div class="card-body">
+          <p class="card-text">Enrollment No.: {{student.en_No}}</p>
+          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Full Name: {{student.name}}</p>
+          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Email: {{student.email}}</p>
+          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">DOB: {{student.dob}}</p>
+          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Field: {{student.field}}</p>
+          <a class="btn btn-success btn-sm mr-1" [ngStyle]="{'margin-top': '-13px'}" (click)="show('Coming Soon')">Edit</a>
+          <a class="btn btn-danger btn-sm ml-1" [ngStyle]="{'margin-top': '-13px'}" onclick="return confirm('Do you want to delete?');">Delete</a>
+        </div>
+      </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -22,4 +22,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
+//sharing data between components
+  // msg = "";
+  // funName(msgs){
+    //   this.msg = msgs;
+    //   console.log(this.msg);
+  // }
+//sharing data between components
+
 }

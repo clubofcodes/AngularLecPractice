@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { iStudent } from './studentInterface';
 
 @Component({
@@ -7,6 +7,11 @@ import { iStudent } from './studentInterface';
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent implements OnInit {
+
+//sharing data between components
+  // @Input() string;
+  // @Output() eventName = new EventEmitter<any>();
+//sharing data between components
 
   changeText: boolean;
 
@@ -78,6 +83,7 @@ export class StudentComponent implements OnInit {
 
   show(alertMsg){
     alert("Edit event is "+alertMsg);
+    // this.eventName.emit("Edit event is "+alertMsg); //sharing data between components
   }
 
   mouseEvent(hover){

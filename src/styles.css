@@ -46,7 +46,7 @@
 .shade {
   margin-right: auto;
   margin-left: auto;
-  margin-bottom: 50px;
+  margin-bottom: 2.5rem !important;
   margin-top: 10px;
   width: 310px !important;
   background-color: black;

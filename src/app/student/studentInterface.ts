@@ -1,10 +1,13 @@
 export interface iStudent{
     img_url: string,
-    en_No: string,
     name: string,
+    en_No: string,
     email: string,
+    password: string,
+    field: string,
+    cellNo: string,
     dob: string,
-    field: string
+    gender: string
 }
 
 // export interface iMyResult{

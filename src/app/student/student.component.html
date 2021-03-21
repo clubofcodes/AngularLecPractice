@@ -2,45 +2,134 @@
 <!-- {{string}} -->
 <!-- sharing data between components -->
 
-<br>
+<br />
 <div class="container-fluid mb-3">
   <div class="row">
     <!-- mouseOver/Leave event goes here -->
-    <div class="col align-content-center" (mouseover)="mouseEvent(true)"
+    <div class="col-sm-10" (mouseover)="mouseEvent(true)"
       (mouseleave)="mouseEvent(false)">
-      <h4 *ngIf="!changeText" class="text-warning text-center">Students List</h4>
-      <h4 *ngIf="changeText" class="text-warning text-center">RKU students list</h4>
+      <h3 *ngIf="!changeText" class="text-warning">Students List</h3>
+      <h3 *ngIf="changeText" class="text-warning">RKU students list</h3>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-warning btn-block btn-lg" (click)="open(content)">
+        Insert
+      </button>
     </div>
   </div>
-  <br>
+
+  <br />
+
   <div class="row gut">
-    <div *ngFor="let student of students; let i=index" [routerLink]="['/student-detail',{id:i}]" class="card text-white shade">
-      <div *ngIf="(i)%2==0; else elseblock">
-        <img class="card-img-top img" [src]="student.img_url" height="200px" width="200px" />
+    <div *ngFor="let student of insertData; let i= index" class="card text-white shade">
+      <div *ngIf="i % 2 == 0; else elseblock">
+        <div class="embedded">
+          <img *ngIf = "student.gender == 'Male'" class="card-img-top img" [src]="img_url" height="200px" width="200px" />
+          <img *ngIf = "student.gender == 'Female'" class="card-img-top img" [src]="female_img" height="200px" width="200px" />
+          <a [routerLink]="['/student-detail', { id: i }]" [ngStyle]="{ color: 'white' }"><i class="fa fa-eye"></i></a>
+        </div>
         <div class="card-body">
-          <p class="card-text">Enrollment No.: {{student.en_No}}</p>
-          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Full Name: {{student.name}}</p>
-          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Email: {{student.email}}</p>
-          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">DOB: {{student.dob}}</p>
-          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Field: {{student.field}}</p>
-          <a class="btn btn-success btn-sm mr-1" [ngStyle]="{'margin-top': '-13px'}" (click)="show('Coming Soon')">Edit</a>
-          <a class="btn btn-danger btn-sm ml-1" [ngStyle]="{'margin-top': '-13px'}" onclick="return confirm('Do you want to delete?');">Delete</a>
+          <p class="card-text">Enrollment No.: {{ student.en_No }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Full Name: {{ (student.name.length>23)? (student.name | slice:0:23) + '. . .' :(student.name) }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Email: {{ (student.email.length>23)? (student.email | slice:0:23) + '. . .' :(student.email) }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Field: {{ student.field }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Phone Number: {{ student.cellNo }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">DOB: {{ student.dob }}</p>
+          <a class="btn btn-success btn-sm mr-1" [ngStyle]="{ 'margin-top':'-13px' }" (click)="setModalData(i,content)">Edit</a>
+          <a class="btn btn-danger btn-sm ml-1" [ngStyle]="{ 'margin-top':'-13px' }" (click)="deleteData(i)">Delete</a>
         </div>
       </div>
       <ng-template #elseblock>
-      <div [ngStyle]="{'background-color':'maroon', 'border-radius':'15px', 'font-family' : 'Jokerman'}">
-        <img class="card-img-top img" [src]="student.img_url" height="200px" width="200px" />
-        <div class="card-body">
-          <p class="card-text">Enrollment No.: {{student.en_No}}</p>
-          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Full Name: {{student.name}}</p>
-          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Email: {{student.email}}</p>
-          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">DOB: {{student.dob}}</p>
-          <p class="card-text" [ngStyle]="{'margin-top': '-13px'}">Field: {{student.field}}</p>
-          <a class="btn btn-success btn-sm mr-1" [ngStyle]="{'margin-top': '-13px'}" (click)="show('Coming Soon')">Edit</a>
-          <a class="btn btn-danger btn-sm ml-1" [ngStyle]="{'margin-top': '-13px'}" onclick="return confirm('Do you want to delete?');">Delete</a>
+        <div [ngStyle]="{'background-color': 'maroon','border-radius': '15px','font-family': 'Jokerman'}">
+          <div class="embedded">
+            <img *ngIf = "student.gender == 'Male'" class="card-img-top img" [src]="img_url" height="200px" width="200px" />
+            <img *ngIf = "student.gender == 'Female'" class="card-img-top img" [src]="female_img" height="200px" width="200px" />
+            <a [routerLink]="['/student-detail', { id: i }]" [ngStyle]="{ color: 'white' }"><i class="fa fa-eye"></i></a>
+          </div>
+          <div class="card-body">
+            <p class="card-text">Enrollment No.: {{ student.en_No }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Full Name: {{ (student.name.length>23)? (student.name | slice:0:23) + '. . .' :(student.name) }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Email: {{ (student.email.length>23)? (student.email | slice:0:23) + '. . .' :(student.email) }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Field: {{ student.field }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Phone Number: {{ student.cellNo }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">DOB: {{ student.dob }}</p>
+            <a class="btn btn-success btn-sm mr-1" [ngStyle]="{ 'margin-top':'-13px' }" (click)="setModalData(i,content)">Edit</a>
+            <a class="btn btn-danger btn-sm ml-1" [ngStyle]="{ 'margin-top':'-13px' }" (click)="deleteData(i)">Delete</a>
+          </div>
         </div>
-      </div>
       </ng-template>
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header text-dark">
+    <h5 class="modal-title" id="modal-basic-title">REGISTER HERE!</h5>
+    <button type="button" class="btn-close mr-2" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body card text-white center-block head">
+    <form #userRegForm="ngForm" (ngSubmit)="saveData(userRegForm)">
+      <fieldset>
+        <legend class="text-danger">Enter Valid Details!!</legend>
+        <small id="emailshare" class="form-text text-muted mb-2">We'll never share your details with anyone else.</small>
+        <div class="form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-user iconSize"></i></span>
+            <input type="text" placeholder="Full Name" placement="left" ngbTooltip="As per your SSC(10th) result." class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="fullName" [(ngModel)]="fullName" id="fname" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-id-card iconSize"></i></span>
+            <input type="text" placeholder="UID - Non editable" placement="left" ngbTooltip="Enrollment ID" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="en_No" [(ngModel)]="en_No" id="uid" [readonly]="isEditable" required />
+          </div>
+          <small *ngIf="isEditable" class="form-text text-muted">Immutable text, Cannot be modified!!</small>
+        </div>
+        <div class="form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-envelope iconSize"></i></span>
+            <input type="email" placeholder="Email Address" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="email" [(ngModel)]="email" id="emailid" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-key iconSize"></i></span>
+            <input type="password" placeholder="Password" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="password" [(ngModel)]="password" id="password" ng-pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-building fa-fw iconSize"></i></span>
+            <input type="text" placeholder="Department/Course" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="field" [(ngModel)]="field" id="branch"required />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-phone iconSize"></i></span>
+            <input type="text" placeholder="Mobile (Dont prefix 0 or 91)" placement="left" ngbTooltip="Indian Cellular Number Only" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="cellNo" [(ngModel)]="cellNo" id="number" maxlength="10" minlength="10" pattern="^[789]\d{9}$" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-birthday-cake iconSize"></i></span>
+            <input type="date" placement="left" ngbTooltip="Date of birth" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="dob" [(ngModel)]="dob" id="dateOfBirth" required />
+          </div>
+        </div>
+        <div class="form-group mb-4">
+          <div class="toggle_radio">
+            <input type="radio" class="toggle_option" id="first_toggle" name="gen" [(ngModel)]="gender" value="Male" />
+            <input type="radio" class="toggle_option" id="second_toggle" name="gen" [(ngModel)]="gender" value="Female" />
+            <label for="first_toggle"><i class="fa fa-male mr-3"></i>Male</label>
+            <label for="second_toggle"><i class="fa fa-female mr-3"></i>Female</label>
+            <div class="toggle_option_slider"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-primary btn-block mt-2 btn-md" >{{dataSub}}</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</ng-template>
+
+<!-- <app-confirm-dialog></app-confirm-dialog>   -->

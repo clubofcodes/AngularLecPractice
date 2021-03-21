@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +11,9 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StudentDetailComponent } from './student-detail/student-detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
+import { FormsModule } from '@angular/forms';
+import { ConfirmDialogService } from './confirm-dialog/confirm-dialog.service';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,14 +22,21 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     ResultComponent,
     NavBarComponent,
     StudentDetailComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    BrowserModule,
+    CommonModule
   ],
-  providers: [],
+  exports: [
+    ConfirmDialogComponent
+  ],
+  providers: [ConfirmDialogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

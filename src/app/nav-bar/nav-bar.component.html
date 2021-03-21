@@ -13,7 +13,7 @@
           <a class="nav-link text-white p-2" ngbTooltip="Students List" routerLink="/students" routerLinkActive="active">Students</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white p-2" ngbTooltip="Particular student result" routerLink="/results" routerLinkActive="active">Result</a>
+          <a class="nav-link text-white p-2" ngbTooltip="All student result" routerLink="/results" routerLinkActive="active">Result</a>
         </li>
       </ul>
     </div>
@@ -22,7 +22,7 @@
       <!-- we can access value using event without hasname/id_var (i.e.: #name) => (keyup.enter)="show($event.target.value)" -->
       <!-- <input type="search" #keyup (keyup)="show(keyup.value)" aria-label="search" placeholder="Search"> -->
       <!-- <input type="search" #keydown (keydown)="show(keydown.value)" aria-label="search" placeholder="Search"> -->
-      <input type="search" #keyent (keyup.enter)="show(keyent.value)" aria-label="search" placeholder="Search">
+      <input type="text" #keyent (keyup.enter)="show(keyent.value)" [(ngModel)]="searchVal" placeholder="Search">
     </div>
   </div>
 </nav>

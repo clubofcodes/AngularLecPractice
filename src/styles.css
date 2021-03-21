@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 .active{
-  border-radius: 4px;
-  background: hsla(0,0%,100%,.15);
+  border-radius: 4px !important;
+  background: hsla(0,0%,100%,.15) !important;
 }
 
 .search-container {
@@ -23,15 +23,22 @@
   width: 180px;
   max-width: 240px;
   height: 50%;
+  transition: width .4s ease-in-out;
   -webkit-appearance: none;
 }
 
+.search-container input:focus{
+  outline : none;
+  width: 380px;
+  box-shadow: 0px 0px 5px 2px #ffca2ccf !important;
+}
+
 .head {
-  background-color: black;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0px 0px 10px 5px white;
-  border-radius: 8px;
+  background-color: black !important;
+  margin: 2.4px !important;
+  margin-top: 0.2rem !important;
+  box-shadow: 0px 0px 2px 5px black !important;
+  border-radius: 0px 0px 4.8px 4.8px !important;
   border-color: transparent;
 }
 
@@ -55,8 +62,15 @@
   box-shadow: 0px 0px 10px 5px grey !important;
 }
 
+.embedded { position: relative;}
+.embedded img { display: block; }
+.embedded .fa-eye { position: absolute; top:15px; left:15px; }
+
 .img {
   border-radius: 13px 13px 13px 45px;
+}
+.img:focus{
+  outline:none;
 }
 
 .mr-1, .mx-1 {

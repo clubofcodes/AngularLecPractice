@@ -1,0 +1,79 @@
+.iconSize {
+  width: 1.28571429em !important;
+  text-align: center;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.form-textbox {
+  box-shadow: none !important;
+}
+
+.wrapper {
+  background: #497dd0;
+  padding: 100px;
+}
+
+.toggle_radio {
+  position: relative;
+  background: white;
+  margin: 5px auto;
+  overflow: hidden;
+  padding: 0 !important;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  position: relative;
+  height: 35px;
+  width: 215px;
+}
+.toggle_radio > * {
+  float: left;
+}
+.toggle_radio input[type="radio"] {
+  display: none;
+  /*position: fixed;*/
+}
+.toggle_radio label {
+  font: 90%/1.618 "Source Sans Pro";
+  color: black;
+  z-index: 0;
+  display: block;
+  width: 100px;
+  height: 20px;
+  margin: 6px 2px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 1;
+  /*background: rgba(0,0,0,.1);*/
+  text-align: center;
+  /*margin: 0 2px;*/
+  /*background: blue;*/ /*make it blue*/
+}
+.toggle_option_slider {
+  /*display: none;*/
+  /*background: red;*/
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  top: 3px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+#first_toggle:checked ~ .toggle_option_slider {
+  background: #238bae73;
+  left: 5px;
+}
+#second_toggle:checked ~ .toggle_option_slider {
+  background: #238bae73;
+  left: 109px;
+}

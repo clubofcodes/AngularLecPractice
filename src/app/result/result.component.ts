@@ -13,65 +13,6 @@ export class ResultComponent implements OnInit {
 
   url="/assets/marks.png";
 
-  students:iStudent[]=[
-    {name: "Rahul Jagetia",
-    email: "rjagetiya780@rku.ac.in",
-    en_No: "18SOEIT11009",
-    dob: "01-05-1999",
-    field: "Information Technology",
-    img_url:"https://i.ibb.co/0jZ5zMs/RJ.jpg"},
-
-    {name: "Pranav Kakdiya",
-    email: "pkakadiya274@rku.ac.in",
-    en_No: "18SOEIT11012",
-    dob: "07-04-2000",
-    field: "Information Technology",
-    img_url:"/assets/pk.jpg"},
-
-    {name: "Deepak Shukla",
-    email: "dshukla293@rku.ac.in",
-    en_No: "18SOEIT11006",
-    dob: "08-06-2001",
-    field: "Information Technology",
-    img_url:"/assets/lambo.JPG"},
-
-    {name: "Dharmil Dhameliya",
-    email: "ddhameliya765@rku.ac.in",
-    en_No: "18SOEIT11008",
-    dob: "14-01-2000",
-    field: "Information Technology",
-    img_url:"/assets/hpenvy.jpg"},
-
-    {name: "Rahul Jagetia",
-    email: "rjagetiya780@rku.ac.in",
-    en_No: "18SOEIT11009",
-    dob: "01-05-1999",
-    field: "Information Technology",
-    img_url:"https://i.ibb.co/0jZ5zMs/RJ.jpg"},
-
-    {name: "Pranav Kakdiya",
-    email: "pkakadiya274@rku.ac.in",
-    en_No: "18SOEIT11012",
-    dob: "07-04-2000",
-    field: "Information Technology",
-    img_url:"/assets/pk.jpg"},
-
-    {name: "Deepak Shukla",
-    email: "dshukla293@rku.ac.in",
-    en_No: "18SOEIT11006",
-    dob: "08-06-2001",
-    field: "Information Technology",
-    img_url:"/assets/lambo.JPG"},
-
-    {name: "Dharmil Dhameliya",
-    email: "ddhameliya765@rku.ac.in",
-    en_No: "18SOEIT11008",
-    dob: "14-01-2000",
-    field: "Information Technology",
-    img_url:"/assets/hpenvy.jpg"}
-
-  ];
-
   results:iResult[]=[
     {allres:[{sem: "First Semester", sgpa:8.75, cgpa:8.75},{sem: "Second Semester", sgpa:9.0, cgpa:8.88},{sem: "Third Semester", sgpa:7.70, cgpa:8.71},{sem: "Fourth Semester", sgpa:8.76, cgpa:8.19},{sem: "Fifth Semester", sgpa:9.27, cgpa:8.71 },{sem: "Sixth Semester", sgpa:0, cgpa:0},{sem: "Seventh Semester", sgpa:0, cgpa:0},{sem: "Eight Semester", sgpa:0, cgpa:0}]},
     {allres:[{sem: "First Semester", sgpa:8.55, cgpa:8.55},{sem: "Second Semester", sgpa:8.75, cgpa:8.85},{sem: "Third Semester", sgpa:7.0, cgpa:8.2},{sem: "Fourth Semester", sgpa:7.1, cgpa:8.1}]},

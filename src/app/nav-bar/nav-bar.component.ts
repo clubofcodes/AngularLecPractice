@@ -11,21 +11,21 @@ export class NavBarComponent implements OnInit {
   searchVal:string="";
   res;
 
-  constructor(private _localStorage:LocalStorageService) { }
+  constructor(private _localStorage: LocalStorageService) { }
 
   ngOnInit(): void {
   }
 
-  show(value){
-    if(value==""){
+  show(value) {
+    if (value == "") {
       alert("Enter Your First Name To Search.");
-    }else if(this._localStorage.getItem(this.searchVal)==null){
+    } else if (this._localStorage.getItem(this.searchVal) == null) {
       alert("Invalid details..!!");
-    }else{
+    } else {
       this.res = this._localStorage.getItem(this.searchVal);
-      alert("You searched for: "+this.res);
-      console.log("Keyup and enter as "+value);
-      this.searchVal="";
+      alert("You searched for: " + this.res);
+      console.log("Keyup and enter as " + value);
+      this.searchVal = "";
     }
   }
 

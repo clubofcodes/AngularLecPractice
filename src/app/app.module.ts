@@ -14,6 +14,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { FormsModule } from '@angular/forms';
 import { ConfirmDialogService } from './confirm-dialog/confirm-dialog.service';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { DataFromApiComponent } from './data-from-api/data-from-api.component';
+import { HttpClientModule} from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { OrderModule } from 'ngx-order-pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,15 +29,19 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     NavBarComponent,
     StudentDetailComponent,
     PageNotFoundComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    DataFromApiComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    BrowserModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    OrderModule
   ],
   exports: [
     ConfirmDialogComponent

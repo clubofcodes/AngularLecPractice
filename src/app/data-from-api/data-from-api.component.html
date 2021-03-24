@@ -1,0 +1,74 @@
+<br />
+<!-- <div class="container">
+  <table class="table text-white table-bordered">
+    <thead>
+      <th>
+        ID
+      </th>
+      <th>
+        Node_Id
+      </th>
+      <th (click)="sort('name')">
+        Name
+      </th>
+      <th>
+        Private
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let apidata of liveapiI | paginate:{itemsPerPage:5, currentPage:p} | orderBy:key:reverse">
+        <td>{{apidata.id}}</td>
+        <td>{{apidata.node_id}}</td>
+        <td>{{apidata.name}}</td>
+        <td>{{apidata.name|uppercase}}</td>
+        <td>{{apidata.private}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br/>
+  <pagination-controls class="text-center" (pageChange)="p=$event"></pagination-controls>
+</div> -->
+
+<div class="container-fluid mb-3">
+  <div class="row">
+    <!-- mouseOver/Leave event goes here -->
+    <div class="col-sm-4">
+      <a class="navbar-brand" href="https://api.github.com/users/hadley/repos"><h3 class="text-warning">DATA Fetched From URL</h3></a>
+    </div>
+    <div class="col-sm-4">
+      <pagination-controls class="text-center" (pageChange)="p=$event"></pagination-controls>
+    </div>
+    <div class="col-sm-4" [ngStyle]="{ 'width': '14%', 'margin-left': '16rem' }">
+        <input class="form-control" type="text" placeholder="Search name..." name="name" [(ngModel)]="name" (ngModelChange)="searchValue()" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text-center">
+      <a class="btn btn-success btn-sm" [ngStyle]="{ 'margin-top':'-13px' }" (click)="sort('name')">Sort by name</a>
+    </div>
+  </div>
+  <br />
+  <div class="row gut">
+    <div *ngFor="let student of liveapiI | paginate:{itemsPerPage:12, currentPage:p} | orderBy:key:reverse; let i= index" class="card text-white shade">
+      <div *ngIf="i % 2 == 0; else elseblock">
+        <div class="card-body">
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">ID: {{ student.id }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }" (click)="sort('name')">Name: {{ (student.name.length>23)? (student.name | slice:0:23) + '. . .' :(student.name) }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Node ID: {{ (student.node_id.length>15)? (student.node_id | slice:0:15) + '. . .' :(student.node_id) }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Private: {{ student.private }}</p>
+        </div>
+      </div>
+      <ng-template #elseblock>
+        <div [ngStyle]="{'background-color': 'maroon','border-radius': '15px','font-family': 'Jokerman'}">
+          <div class="card-body">
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">ID: {{ student.id }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Name: {{ (student.name.length>23)? (student.name | slice:0:23) + '. . .' :(student.name) }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Node ID: {{ (student.node_id.length>15)? (student.node_id | slice:0:15) + '. . .' :(student.node_id) }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Private: {{ student.private }}</p>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

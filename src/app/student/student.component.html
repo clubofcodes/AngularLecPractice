@@ -27,11 +27,11 @@
           <a [routerLink]="['/student-detail', { id: i }]" [ngStyle]="{ color: 'white' }"><i class="fa fa-eye"></i></a>
         </div>
         <div class="card-body">
-          <p class="card-text">Enrollment No.: {{ student.en_No }}</p>
-          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Full Name: {{ (student.name.length>23)? (student.name | slice:0:23) + '. . .' :(student.name) }}</p>
-          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Email: {{ (student.email.length>23)? (student.email | slice:0:23) + '. . .' :(student.email) }}</p>
-          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Field: {{ student.field }}</p>
-          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Phone Number: {{ student.cellNo }}</p>
+          <p class="card-text">Enrollment No.: {{ student.uid }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Full Name: {{ (student.fullname.length>23)? (student.fullname | slice:0:23) + '. . .' :(student.fullname) }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Username: {{ (student.username.length>23)? (student.username | slice:0:20) + '. . .' :(student.username) }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Field: {{ student.department }}</p>
+          <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Phone Number: {{ student.cellno }}</p>
           <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">DOB: {{ student.dob }}</p>
           <a class="btn btn-success btn-sm mr-1" [ngStyle]="{ 'margin-top':'-13px' }" (click)="setModalData(i,content)">Edit</a>
           <a class="btn btn-danger btn-sm ml-1" [ngStyle]="{ 'margin-top':'-13px' }" (click)="deleteData(i)">Delete</a>
@@ -45,11 +45,11 @@
             <a [routerLink]="['/student-detail', { id: i }]" [ngStyle]="{ color: 'white' }"><i class="fa fa-eye"></i></a>
           </div>
           <div class="card-body">
-            <p class="card-text">Enrollment No.: {{ student.en_No }}</p>
-            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Full Name: {{ (student.name.length>23)? (student.name | slice:0:23) + '. . .' :(student.name) }}</p>
-            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Email: {{ (student.email.length>23)? (student.email | slice:0:23) + '. . .' :(student.email) }}</p>
-            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Field: {{ student.field }}</p>
-            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Phone Number: {{ student.cellNo }}</p>
+            <p class="card-text">Enrollment No.: {{ student.uid }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Full Name: {{ (student.fullname.length>23)? (student.fullname | slice:0:23) + '. . .' :(student.fullname) }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Username: {{ (student.username.length>23)? (student.username | slice:0:20) + '. . .' :(student.username) }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Field: {{ student.department }}</p>
+            <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">Phone Number: {{ student.cellno }}</p>
             <p class="card-text" [ngStyle]="{ 'margin-top': '-13px' }">DOB: {{ student.dob }}</p>
             <a class="btn btn-success btn-sm mr-1" [ngStyle]="{ 'margin-top':'-13px' }" (click)="setModalData(i,content)">Edit</a>
             <a class="btn btn-danger btn-sm ml-1" [ngStyle]="{ 'margin-top':'-13px' }" (click)="deleteData(i)">Delete</a>
@@ -73,20 +73,28 @@
         <div class="form-group">
           <div class="input-group-prepend">
             <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-user iconSize"></i></span>
-            <input type="text" placeholder="Full Name" placement="left" ngbTooltip="As per your SSC(10th) result." class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="fullName" [(ngModel)]="fullName" id="fname" required />
+            <input type="text" placeholder="Full Name" placement="left" ngbTooltip="As per your SSC(10th) result." class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="fullname" #name="ngModel" [(ngModel)]="fullname" id="fname" required />
           </div>
         </div>
         <div class="form-group">
           <div class="input-group-prepend">
             <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-id-card iconSize"></i></span>
-            <input type="text" placeholder="UID - Non editable" placement="left" ngbTooltip="Enrollment ID" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="en_No" [(ngModel)]="en_No" id="uid" [readonly]="isEditable" required />
+            <input type="text" placeholder="UID - Non editable" placement="left" ngbTooltip="Enrollment ID" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="uid" #enNo="ngModel" [(ngModel)]="uid" id="uid" [readonly]="isEditable" minlength="12" maxlength="12" required />
           </div>
           <small *ngIf="isEditable" class="form-text text-muted">Immutable text, Cannot be modified!!</small>
+          <div *ngIf="enNo.invalid && (enNo.touched || enNo.dirty)" >
+            <div *ngIf="enNo.errors.required" class="text-danger">
+              Enrollment ID is mandatory
+            </div>
+            <div *ngIf="enNo.errors.minlength" class="text-primary">
+              Min length should be {{enNo.errors.minlength?.requiredLength}}
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <div class="input-group-prepend">
             <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-envelope iconSize"></i></span>
-            <input type="email" placeholder="Email Address" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="email" [(ngModel)]="email" id="emailid" required />
+            <input type="email" placeholder="Email Address" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="username" [(ngModel)]="username" id="emailid" required />
           </div>
         </div>
         <div class="form-group">
@@ -98,13 +106,13 @@
         <div class="form-group">
           <div class="input-group-prepend">
             <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-building fa-fw iconSize"></i></span>
-            <input type="text" placeholder="Department/Course" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="field" [(ngModel)]="field" id="branch"required />
+            <input type="text" placeholder="Department/Course" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="department" [(ngModel)]="department" id="department" required />
           </div>
         </div>
         <div class="form-group">
           <div class="input-group-prepend">
             <span class="input-group-text" [ngStyle]="{ 'border-radius': '4px 0px 0px 4px' }"><i class="fa fa-phone iconSize"></i></span>
-            <input type="text" placeholder="Mobile (Dont prefix 0 or 91)" placement="left" ngbTooltip="Indian Cellular Number Only" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="cellNo" [(ngModel)]="cellNo" id="number" maxlength="10" minlength="10" pattern="^[789]\d{9}$" required />
+            <input type="text" placeholder="Mobile (Dont prefix 0 or 91)" placement="left" ngbTooltip="Indian Cellular Number Only" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '0px 4px 4px 0px' }" name="cellno" [(ngModel)]="cellno" id="number" maxlength="10" minlength="10" pattern="^[789]\d{9}$" required />
           </div>
         </div>
         <div class="form-group">
@@ -115,8 +123,8 @@
         </div>
         <div class="form-group mb-4">
           <div class="toggle_radio">
-            <input type="radio" class="toggle_option" id="first_toggle" name="gen" [(ngModel)]="gender" value="Male" />
-            <input type="radio" class="toggle_option" id="second_toggle" name="gen" [(ngModel)]="gender" value="Female" />
+            <input type="radio" class="toggle_option" id="first_toggle" name="gender" [(ngModel)]="gender" value="Male" />
+            <input type="radio" class="toggle_option" id="second_toggle" name="gender" [(ngModel)]="gender" value="Female" />
             <label for="first_toggle"><i class="fa fa-male mr-3"></i>Male</label>
             <label for="second_toggle"><i class="fa fa-female mr-3"></i>Female</label>
             <div class="toggle_option_slider"></div>

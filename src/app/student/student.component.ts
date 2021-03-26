@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogService } from '../confirm-dialog/confirm-dialog.service';
 import { LocalStorageService } from '../shared/local-storage.service';
+import { NodejsApiService } from '../shared/nodejs-api.service';
 import { iStudent } from './studentInterface';
 
 @Component({
@@ -21,12 +22,12 @@ export class StudentComponent implements OnInit {
 
   img_url = "../../assets/male.jpg"
   female_img = "../../assets/female.jpg"
-  fullName: string = "";
-  en_No: string = "";
-  email: string = "";
+  fullname: string = "";
+  uid: string = "";
+  username: string = "";
   password: string = "";
-  field: string = "";
-  cellNo: string = "";
+  department: string = "";
+  cellno: string = "";
   dob: string = "";
   gender: string = "Male";
 
@@ -38,7 +39,7 @@ export class StudentComponent implements OnInit {
   isEditable: boolean = false;
   changeText: boolean;
 
-  constructor(private _localStorage: LocalStorageService, private modalService: NgbModal, private router: Router, private confirmDialogService: ConfirmDialogService) {
+  constructor(private _localStorage: LocalStorageService, private nodejsApiService: NodejsApiService, private modalService: NgbModal, private router: Router, private confirmDialogService: ConfirmDialogService) {
     this.changeText = false;
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -59,22 +60,25 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    for (let i = 0; i < this._localStorage.storageLength(); i++) {
-      this.keyName = this._localStorage.getKeyName(i);
-      this.res = this._localStorage.getItem(this.keyName);
-      this.insertData[i] = JSON.parse(this.res);
-    }
+    // for (let i = 0; i < this._localStorage.storageLength(); i++) {
+    //   this.keyName = this._localStorage.getKeyName(i);
+    //   this.res = this._localStorage.getItem(this.keyName);
+    //   this.insertData[i] = JSON.parse(this.res);
+    // }
+    this.nodejsApiService.getStudent().subscribe((response)=>{
+      this.insertData = response;
+    });
   }
 
   open(content) {
-    this.fullName = "";
-    this.email = "";
+    this.fullname = "";
+    this.username = "";
     this.password = "",
-    this.en_No = "";
+    this.uid = "";
     this.isEditable = false;
     this.dob = "";
-    this.field = "";
-    this.cellNo = "";
+    this.department = "";
+    this.cellno = "";
     this.gender = "Male";
     this.dataSub = "Insert";
     this.modalService.open(content, { centered: true, size: 'md' });
@@ -91,33 +95,35 @@ export class StudentComponent implements OnInit {
   }
 
   stud: iStudent = {
-    name: this.fullName,
-    email: this.email,
+    fullname: this.fullname,
+    uid: this.uid,
+    username: this.username,
     password: this.password,
-    gender: this.gender,
-    en_No: this.en_No,
-    cellNo: this.cellNo,
+    department: this.department,
+    cellno: this.cellno,
     dob: this.dob,
-    field: this.field,
-    img_url: this.img_url,
+    gender: this.gender,
   };
 
   saveData(userForm) {
-    this.stud.name = userForm.value.fullName;
-    this.stud.en_No = userForm.value.en_No;
-    this.stud.email = userForm.value.email;
-    this.stud.password = userForm.value.password;
-    this.stud.field = userForm.value.field;
-    this.stud.cellNo = userForm.value.cellNo;
-    this.stud.dob = userForm.value.dob;
-    this.stud.gender = userForm.value.gen;
+    // this.stud.fullname = userForm.value.fullname;
+    // this.stud.uid = userForm.value.uid;
+    // this.stud.username = userForm.value.username;
+    // this.stud.password = userForm.value.password;
+    // this.stud.department = userForm.value.department;
+    // this.stud.cellno = userForm.value.cellno;
+    // this.stud.dob = userForm.value.dob;
+    // this.stud.gender = userForm.value.gender;
 
-    if (this.fullName == "" || this.en_No == "" || this.email == "" || this.password == "" || this.field == "" || this.cellNo == "" || this.dob == "") {
+    if (this.fullname == "" || this.uid == "" || this.username == "" || this.password == "" || this.department == "" || this.cellno == "" || this.dob == "") {
       alert("Error: All fields are mandatory.");
     } else {
-      this._localStorage.setItem(userForm.value.en_No, JSON.stringify(this.stud));
+      // this._localStorage.setItem(userForm.value.uid, JSON.stringify(this.stud));
+      this.nodejsApiService.addStudent(userForm.value).subscribe(
+        (res)=>{
+          console.log("post ",res);
+      });
       if(this.dataSub=="Insert"){alert("Inserted successfully..!!");}else{alert("Updated successfully..!!");}
-
       this.router.navigate(['/students']);
       this.modalService.dismissAll();
     }
@@ -126,14 +132,14 @@ export class StudentComponent implements OnInit {
   setModalData(i: number, content) {
     this.modalService.open(content, { centered: true, size: 'md' });
     this.dataSub = "Update";
-    this.fullName = this.insertData[i].name;
+    this.fullname = this.insertData[i].fullname;
     this.isEditable = true;
-    this.en_No = this.insertData[i].en_No;
-    this.email = this.insertData[i].email;
+    this.uid = this.insertData[i].uid;
+    this.username = this.insertData[i].username;
     this.password = this.insertData[i].password,
+    this.department = this.insertData[i].department;
+    this.cellno = this.insertData[i].cellno;
     this.dob = this.insertData[i].dob;
-    this.field = this.insertData[i].field;
-    this.cellNo = this.insertData[i].cellNo;
     this.gender = this.insertData[i].gender;
   }
 
@@ -145,9 +151,9 @@ export class StudentComponent implements OnInit {
     // }, function () {
     //   alert("No clicked");
     // })
-    alert("Do you want to delete " + this.insertData[i].name + " data?");
-    this.en_No = this.insertData[i].en_No;
-    this._localStorage.deleteItem(this.en_No);
+    alert("Do you want to delete " + this.insertData[i].fullname + " data?");
+    this.uid = this.insertData[i].uid;
+    this._localStorage.deleteItem(this.uid);
     this.router.navigate(['/students']);
     // window.location.reload();
   }

@@ -16,7 +16,8 @@ export class StudentDetailComponent implements OnInit {
   id:any;
 
   students:iStudent[]=[
-    {fullname: "Rahul Jagetia",
+    {_id:"",
+    fullname: "Rahul Jagetia",
     username: "rjagetiya780@rku.ac.in",
     password:"",
     uid: "18SOEIT11009",
@@ -25,7 +26,8 @@ export class StudentDetailComponent implements OnInit {
     dob: "01-05-1999",
     gender:"Male"},
 
-    {fullname: "Kavya Patel",
+    {_id:"",
+    fullname: "Kavya Patel",
     username: "kpatel223@rku.ac.in",
     password:"",
     uid: "17SOEIT11013",
@@ -34,7 +36,8 @@ export class StudentDetailComponent implements OnInit {
     dob: "13-02-2000",
     gender:"Female"},
 
-    {fullname: "Pranav Kakadiya",
+    {_id:"",
+    fullname: "Pranav Kakadiya",
     username: "pkakadiya274@rku.ac.in",
     password:"",
     gender:"Male",
@@ -43,7 +46,8 @@ export class StudentDetailComponent implements OnInit {
     dob: "07-04-2000",
     department: "Information Technology"},
 
-    {fullname: "Trisha Chaudary",
+    {_id:"",
+    fullname: "Trisha Chaudary",
     username: "tchaudary365@rku.ac.in",
     password:"",
     gender:"Female",
@@ -52,7 +56,8 @@ export class StudentDetailComponent implements OnInit {
     dob: "23-07-2000",
     department: "Information Technology"},
 
-    {fullname: "Bhumik Kalola",
+    {_id:"",
+    fullname: "Bhumik Kalola",
     username: "bkalola264@rku.ac.in",
     password:"",
     gender:"Male",
@@ -61,7 +66,8 @@ export class StudentDetailComponent implements OnInit {
     dob: "09-09-2000",
     department: "Information Technology"},
 
-    {fullname: "Chitrangada Singh",
+    {_id:"",
+    fullname: "Chitrangada Singh",
     username: "csingh143@rku.ac.in",
     password:"",
     gender:"Female",
@@ -70,7 +76,8 @@ export class StudentDetailComponent implements OnInit {
     dob: "19-07-2000",
     department: "Information Technology"},
 
-    {fullname: "Deepak Shukla",
+    {_id:"",
+    fullname: "Deepak Shukla",
     username: "dshukla293@rku.ac.in",
     password:"",
     gender:"Male",
@@ -79,7 +86,8 @@ export class StudentDetailComponent implements OnInit {
     dob: "08-06-2001",
     department: "Information Technology"},
 
-    {fullname: "Dharmil Dhameliya",
+    {_id:"",
+    fullname: "Dharmil Dhameliya",
     username: "ddhameliya765@rku.ac.in",
     password:"",
     gender:"Male",

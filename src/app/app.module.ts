@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -12,8 +11,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StudentDetailComponent } from './student-detail/student-detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FormsModule } from '@angular/forms';
-import { ConfirmDialogService } from './confirm-dialog/confirm-dialog.service';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DataFromApiComponent } from './data-from-api/data-from-api.component';
 import { HttpClientModule} from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -29,7 +26,6 @@ import { OrderModule } from 'ngx-order-pipe';
     NavBarComponent,
     StudentDetailComponent,
     PageNotFoundComponent,
-    ConfirmDialogComponent,
     DataFromApiComponent
   ],
   imports: [
@@ -43,10 +39,8 @@ import { OrderModule } from 'ngx-order-pipe';
     Ng2SearchPipeModule,
     OrderModule
   ],
-  exports: [
-    ConfirmDialogComponent
-  ],
-  providers: [ConfirmDialogService],
+  exports: [],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

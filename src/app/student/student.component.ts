@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmDialogService } from '../confirm-dialog/confirm-dialog.service';
 import { LocalStorageService } from '../shared/local-storage.service';
 import { NodejsApiService } from '../shared/nodejs-api.service';
-import { iStudent } from './studentInterface';
-
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-student',
   templateUrl: './student.component.html',
@@ -19,7 +17,9 @@ export class StudentComponent implements OnInit {
   //sharing data between components
 
   mySubscription: any;
+  p=1; //starting of page.
 
+  // student variables
   img_url = "../../assets/male.jpg"
   female_img = "../../assets/female.jpg"
   fullname: string = "";
@@ -30,17 +30,18 @@ export class StudentComponent implements OnInit {
   cellno: string = "";
   dob: string = "";
   gender: string = "Male";
+  // student variables
 
   keyName; //to store keyvalue from local storage.
   res; //result for storing object-data fetched by keyvalue(i.e. keyName)
-  insertData: any = [];
+  insertData: any = []; //array to store fetched data to display using forLoop.
 
-  dataSub: string = "Insert";
-  isEditable: boolean = false;
-  changeText: boolean;
+  dataSub: string = "Insert"; //for changing btn text.
+  isEditable: boolean = false; //ngIf directives condition for editing data when editBtn clicked.
+  changeText: boolean; //ngIf directives condition for mouse-over/change effect.
 
-  constructor(private _localStorage: LocalStorageService, private nodejsApiService: NodejsApiService, private modalService: NgbModal, private router: Router, private confirmDialogService: ConfirmDialogService) {
-    this.changeText = false;
+  constructor(private _localStorage: LocalStorageService, private nodejsApiService: NodejsApiService, private modalService: NgbModal, private router: Router) {
+    this.changeText = false; //for over effect on Student List text
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -60,13 +61,13 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // for (let i = 0; i < this._localStorage.storageLength(); i++) {
-    //   this.keyName = this._localStorage.getKeyName(i);
-    //   this.res = this._localStorage.getItem(this.keyName);
-    //   this.insertData[i] = JSON.parse(this.res);
-    // }
-    this.nodejsApiService.getStudent().subscribe((response)=>{
-      this.insertData = response;
+    //R->read operation reads data using nodejsApi
+    this.nodejsApiService.getStudent().subscribe((readData)=>{
+      this.insertData = readData;
+      //adding isEditable property/field runtime.
+      this.insertData.forEach(element => {
+        element['isEditable'] = false;
+      });
     });
   }
 
@@ -94,67 +95,81 @@ export class StudentComponent implements OnInit {
     return this.changeText;
   }
 
-  stud: iStudent = {
-    fullname: this.fullname,
-    uid: this.uid,
-    username: this.username,
-    password: this.password,
-    department: this.department,
-    cellno: this.cellno,
-    dob: this.dob,
-    gender: this.gender,
-  };
+  //sorting in reverse according to emailId.
+  key = 'username';
+  reverse:boolean = false;
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
 
+  //C->Create operation insert's data using nodejsApi
   saveData(userForm) {
-    // this.stud.fullname = userForm.value.fullname;
-    // this.stud.uid = userForm.value.uid;
-    // this.stud.username = userForm.value.username;
-    // this.stud.password = userForm.value.password;
-    // this.stud.department = userForm.value.department;
-    // this.stud.cellno = userForm.value.cellno;
-    // this.stud.dob = userForm.value.dob;
-    // this.stud.gender = userForm.value.gender;
+    //common toast/alert for required & inserting data.
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    });
 
     if (this.fullname == "" || this.uid == "" || this.username == "" || this.password == "" || this.department == "" || this.cellno == "" || this.dob == "") {
-      alert("Error: All fields are mandatory.");
+      Toast.fire({icon:'warning',title:'All fields are mandatory!!'});
     } else {
-      // this._localStorage.setItem(userForm.value.uid, JSON.stringify(this.stud));
+      //insertng data into online db using nodejs
       this.nodejsApiService.addStudent(userForm.value).subscribe(
         (res)=>{
           console.log("post ",res);
+          this.router.navigate(['/students']); //refreshing the component
+          Toast.fire({icon: 'success',title: 'Inserted successfully!'});
       });
-      if(this.dataSub=="Insert"){alert("Inserted successfully..!!");}else{alert("Updated successfully..!!");}
-      this.router.navigate(['/students']);
-      this.modalService.dismissAll();
+
+      this.modalService.dismissAll(); //for closing insert modal after succefully data inserted.
     }
   }
 
-  setModalData(i: number, content) {
-    this.modalService.open(content, { centered: true, size: 'md' });
-    this.dataSub = "Update";
-    this.fullname = this.insertData[i].fullname;
-    this.isEditable = true;
-    this.uid = this.insertData[i].uid;
-    this.username = this.insertData[i].username;
-    this.password = this.insertData[i].password,
-    this.department = this.insertData[i].department;
-    this.cellno = this.insertData[i].cellno;
-    this.dob = this.insertData[i].dob;
-    this.gender = this.insertData[i].gender;
+  //edit & cancel button click events.
+  editBtn(editData) {editData.isEditable = true;}
+  cancelBtn(back) {
+    back.isEditable = false;
+    this.ngOnInit(); //refreshing the component
   }
 
-  deleteData(i: number) {
-    // var name = this.insertData[i]
-    // this.confirmDialogService.confirmThis("Are you sure to delete?", function () {
-    //   alert("Yes clicked");
-    //   // alert("Do you want to delete " + this.insertData[i].name + " data?");
-    // }, function () {
-    //   alert("No clicked");
-    // })
-    alert("Do you want to delete " + this.insertData[i].fullname + " data?");
-    this.uid = this.insertData[i].uid;
-    this._localStorage.deleteItem(this.uid);
-    this.router.navigate(['/students']);
+  //U->Update operation update's data using nodejsApi
+  update(updateData){
+    this.nodejsApiService.updateStudent(updateData).subscribe(
+      (data)=>{
+        console.log(data);
+        updateData.isEditable = false;
+        Swal.fire('Thank you...', 'Data updated succesfully!', 'success');
+    });
+  }
+
+  //D->Delete operation delete's data using nodejsApi
+  delete(deleteData) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to recover ' + deleteData.fullname + "'s data?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.nodejsApiService.deleteStudent(deleteData).subscribe();
+        Swal.fire('Deleted', 'Your record has been deleted.', 'success');
+      } else {
+        Swal.fire('Cancelled', 'Your record is safe :)', 'info');
+      }
+      if(Swal.close){
+        this.router.navigate(['/students']);
+      }
+    })
     // window.location.reload();
   }
 

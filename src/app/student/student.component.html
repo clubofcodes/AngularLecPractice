@@ -6,19 +6,83 @@
 <div class="container-fluid mb-3">
   <div class="row">
     <!-- mouseOver/Leave event goes here -->
-    <div class="col-sm-10" (mouseover)="mouseEvent(true)"
+    <div class="col-sm-4" (mouseover)="mouseEvent(true)"
       (mouseleave)="mouseEvent(false)">
       <h3 *ngIf="!changeText" class="text-warning">Students List</h3>
       <h3 *ngIf="changeText" class="text-warning">RKU students list</h3>
     </div>
-    <div class="col-sm-2">
-      <button class="btn btn-warning btn-block btn-lg" (click)="open(content)">Insert</button>
+    <div class="col-sm-4">
+      <pagination-controls class="text-center" (pageChange)="p=$event"></pagination-controls>
+    </div>
+    <div class="col-sm-4" [ngStyle]="{ 'width': '14%', 'margin-left': '16rem' }">
+      <button class="btn btn-warning btn-block btn-lg" (click)="open(content)"><i class="mr-1 fa fa-user-plus mr-4"></i>Insert</button>
     </div>
   </div>
 
   <br />
 
-  <div class="row gut">
+  <div class="container-fluid">
+  <table class="table text-white text-center table-bordered shade table-hover">
+    <thead>
+      <tr id="npHover">
+        <th class="sorting">Full Name
+          <a [ngStyle]="{ color: 'white' }"><i class="fa fa-sort" (click)="sort('fullname')"></i></a>
+        </th>
+        <th class="sorting">UID
+          <a [ngStyle]="{ color: 'white' }"><i class="fa fa-sort" (click)="sort('uid')"></i></a>
+        </th>
+        <th class="sorting">Username
+          <a [ngStyle]="{ color: 'white' }"><i class="fa fa-sort" (click)="sort('username')"></i></a>
+        </th>
+        <th class="sorting">Field
+          <a [ngStyle]="{ color: 'white' }"><i class="fa fa-sort" (click)="sort('field')"></i></a>
+        </th>
+        <th class="sorting">Number
+          <a [ngStyle]="{ color: 'white' }"><i class="fa fa-sort" (click)="sort('cellno')"></i></a>
+        </th>
+        <th class="sorting">Actions
+          <a [ngStyle]="{ color: 'white' }"><i class="fa fa-eraser" placement="top" ngbTooltip="Set to unsorted." (click)="sort('')"></i></a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let apidata of insertData | paginate:{itemsPerPage:5, currentPage:p} | orderBy:key:reverse; let i= index">
+        <td>
+          <div *ngIf="apidata.isEditable">
+            <input type="text" placeholder="Full Name" placement="bottom" ngbTooltip="As per your SSC(10th) result." class="form-control" [ngStyle]="{ 'border-radius': '4px' }" name="fullname" #name="ngModel" [(ngModel)]="apidata.fullname" id="fname" required />
+          </div>
+          <div *ngIf="!apidata.isEditable">
+            {{apidata.fullname}}
+          </div>
+        </td>
+        <td>{{apidata.uid | uppercase}}</td>
+        <td>{{apidata.username}}</td>
+        <td>{{apidata.department}}</td>
+        <td>
+          <div *ngIf="apidata.isEditable">
+            <input type="text" placeholder="Mobile (Dont prefix 0 or 91)" placement="left" ngbTooltip="Indian Cellular Number Only" class="form-control form-textbox" [ngStyle]="{ 'border-radius': '4px' }" name="cellno" [(ngModel)]="apidata.cellno" id="number" maxlength="10" minlength="10" pattern="^[789]\d{9}$" required />
+          </div>
+          <div *ngIf="!apidata.isEditable">
+            {{apidata.cellno}}
+          </div>
+        </td>
+        <td>
+          <div *ngIf="apidata.isEditable">
+            <a class="btn btn-success btn-sm mr-1" (click)="update(apidata)"><i class="mr-1 fa fa-user-edit"></i>Update</a>
+            <a class="btn btn-danger btn-sm ml-1" (click)="cancelBtn(apidata)"><i class="mr-1 fa fa-ban"></i>Cancel</a>
+          </div>
+          <div *ngIf="!apidata.isEditable">
+            <a class="btn btn-success btn-sm mr-1" (click)="editBtn(apidata)"><i class="mr-1 fa fa-pencil-alt"></i>Edit</a>
+            <a class="btn btn-danger btn-sm ml-1" (click)="delete(apidata)"><i class="mr-1 fa fa-trash-alt"></i>Delete</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br/>
+</div>
+
+  <!-- <div class="row gut">
     <div *ngFor="let student of insertData; let i= index" class="card text-white shade">
       <div *ngIf="i % 2 == 0; else elseblock">
         <div class="embedded">
@@ -58,11 +122,11 @@
       </ng-template>
     </div>
   </div>
-</div>
+</div> -->
 
 <ng-template #content let-modal>
-  <div class="modal-header text-dark">
-    <h5 class="modal-title" id="modal-basic-title">REGISTER HERE!</h5>
+  <div class="modal-header text-dark text-center">
+    <h5 class="modal-title w-100" id="modal-basic-title">Student Details!</h5>
     <button type="button" class="btn-close mr-2" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body card text-white center-block head">
@@ -137,5 +201,3 @@
     </form>
   </div>
 </ng-template>
-
-<!-- <app-confirm-dialog></app-confirm-dialog>   -->

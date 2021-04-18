@@ -202,3 +202,9 @@ table tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
 }
 /* styling for user data table */
+
+img.img-center {
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 4px;
+}

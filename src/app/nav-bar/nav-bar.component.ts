@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../shared/local-storage.service';
+import { UserAuthService } from '../shared/user-auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,7 +12,7 @@ export class NavBarComponent implements OnInit {
   searchVal:string="";
   res;
 
-  constructor(private _localStorage: LocalStorageService) { }
+  constructor(private _localStorage: LocalStorageService, public _userAuthService: UserAuthService) { }
 
   ngOnInit(): void {
   }
@@ -27,6 +28,10 @@ export class NavBarComponent implements OnInit {
       console.log("Keyup and enter as " + value);
       this.searchVal = "";
     }
+  }
+
+  logout(){
+    this._userAuthService.logout();
   }
 
 }

@@ -10,12 +10,17 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StudentDetailComponent } from './student-detail/student-detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataFromApiComponent } from './data-from-api/data-from-api.component';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { OrderModule } from 'ngx-order-pipe';
+import { UserAuthService } from './shared/user-auth.service';
+import { UserRegisterComponent } from './user-register/user-register.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { UserAuthGuard } from './shared/user-auth.guard';
+import { AuthInterceptor } from './shared/authconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,9 @@ import { OrderModule } from 'ngx-order-pipe';
     NavBarComponent,
     StudentDetailComponent,
     PageNotFoundComponent,
-    DataFromApiComponent
+    DataFromApiComponent,
+    UserRegisterComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -37,10 +44,15 @@ import { OrderModule } from 'ngx-order-pipe';
     HttpClientModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
-    OrderModule
+    OrderModule,
+    ReactiveFormsModule
   ],
   exports: [],
-  providers: [],
+  providers: [UserAuthService, UserAuthGuard,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
